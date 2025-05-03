@@ -38,7 +38,7 @@ const generateTimestamp = (): string => new Date().toLocaleTimeString([], { hour
 
 export default function PremiumDashboard() {
   const [landing, setLanding] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [lineData, setLineData] = useState([{ time: '10:00', value: 80 }]);
   const [barData, setBarData] = useState([{ name: 'CPU', usage: 70 }, { name: 'Memory', usage: 55 }]);
   const [pieData] = useState([
