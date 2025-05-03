@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, Fragment, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell
@@ -243,20 +243,91 @@ export default function PremiumDashboard() {
         {landing ? (
           <motion.div
             key="landing"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center justify-center h-screen text-center px-4 w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col items-center justify-center h-screen text-center px-4 w-full relative overflow-hidden"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 bg-clip-text text-transparent">⚡ Welcome to Premium Dashboard</h1>
-            <p className="text-lg mb-6 max-w-xl">Monitor metrics, view charts, and get real-time updates all in one place.</p>
+            {/* Abstract background shapes */}
+            <motion.div 
+              className="absolute inset-0 -z-10 opacity-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.1 }}
+            >
+              <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 blur-3xl" />
+              <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-blue-500 to-teal-400 blur-3xl" />
+            </motion.div>
+            
+            {/* 3D Interactive Heading */}
+            <motion.div
+              className="perspective-1000 transform-gpu"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+              whileHover={{ scale: 1.02, rotateX: 5, rotateY: -5 }}
+            >
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                ⚡ Premium Dashboard
+              </h1>
+              <p className="text-xl mb-8 max-w-xl mx-auto text-gray-600 dark:text-gray-300">
+                Real-time analytics and insights with a modern, intuitive interface
+              </p>
+            </motion.div>
+            
+            {/* Feature highlights with progressive blur */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-4xl">
+              {[
+                { icon: "📊", title: "Data Visualization", desc: "Interactive charts with real-time updates" },
+                { icon: "🔍", title: "AI Insights", desc: "Smart recommendations and anomaly detection" },
+                { icon: "⚡", title: "Lightning Fast", desc: "Optimized performance for instant analysis" }
+              ].map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
+                  whileHover={{ y: -5, scale: 1.03 }}
+                  className={`p-6 rounded-2xl backdrop-blur-sm bg-white/10 border border-gray-200/20 dark:border-gray-700/30 shadow-xl`}
+                >
+                  <div className="text-3xl mb-3">{feature.icon}</div>
+                  <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{feature.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* CTA Button with 3D effect */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05, rotateZ: 0.5 }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
               onClick={() => setLanding(false)}
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-all duration-300"
-            >Enter Dashboard →</motion.button>
+              className="relative bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg transform-gpu"
+            >
+              <span className="relative z-10">Enter Dashboard</span>
+              <motion.div 
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0"
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.button>
+            
+            {/* Social proof section */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="mt-16 text-gray-500 text-sm"
+            >
+              <p className="mb-3">Trusted by innovative teams worldwide</p>
+              <div className="flex justify-center space-x-8 opacity-70">
+                {["Microsoft", "Google", "Amazon", "Tesla", "Meta"].map((company, i) => (
+                  <span key={i} className="font-semibold">{company}</span>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         ) : (
           <>
